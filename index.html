@@ -1,92 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<link href="/styles/bulma.css" rel="stylesheet" />
+		<link href="/styles/styles.css" rel="stylesheet" />
+	</head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Document</title>
-  <!-- <link rel="stylesheet" href="/styles/styles.css"> -->
-  <!-- <link href="https://fonts.googleapis.com/css2?family=Varela&display=swap" rel="stylesheet"> -->
-  <link href="/styles/bulma.css" rel="stylesheet">
+	<body>
+		<section class="section">
+			<div class="container">
+				<h1 class="title">Cost of Duty</h1>
+				<p class="subtitle">Calculate your <strong>Destruction</strong>!</p>
 
-  <!-- <script src="index2.js" async></script> -->
-</head>
-
-<body>
-  <section class="section">
-    <div class="container">
-      <h1 class="title">
-        Hello World
-      </h1>
-      <p class="subtitle">
-        My first website with <strong>Bulma</strong>!
-      </p>
-    </div>
-  </section>
-  <section class="section">
-    <div>
-      <!-- <h1>Cost of Duty</h1>
+				<!-- <h1>Cost of Duty</h1>
     <h2>Find out how much money you've used in Call of Duty's multiplayer!</h2> -->
-      <p>1. Pick the platform you want to search.</p>
-      <p>2. Enter player's ID/Tag.</p>
-      <p>
-        3. Hit "Go" to see how much money has been used if online matches were
-        real!
-      </p>
-      <h3>Test Accounts</h3>
-      <ul>
-        <li>Lierrmm#2364</li>
-        <li>phdinwhy#1462</li>
-        <li>ujustgotowned#1241</li>
-        <li>theguero16#1389</li>
-        <li>jmonster#1567</li>
-        <li>supremeruler#11316</li>
-        <li> samfisher#1366</li>
-      </ul>
-    </div>
-  </section>
+				<p>1. Pick the platform you want to search.</p>
+				<p>2. Enter player's ID/Tag.</p>
+				<p>3. Hit "Go" to see how much money has been used if online matches were real!</p>
+				<h3>Test Accounts</h3>
+				<ul>
+					<li>Lierrmm#2364</li>
+					<li>phdinwhy#1462</li>
+					<li>ujustgotowned#1241</li>
+					<li>theguero16#1389</li>
+					<li>jmonster#1567</li>
+					<li>supremeruler#11316</li>
+					<li>samfisher#1366</li>
+				</ul>
 
-  <div>
-    <section class="section">
-      <div class="container">
-        <form action="/" method="POST">
-          <div class="field">
-            <div class="control">
-              <input type="text" name="username" id="" />
-            </div>
+				<form action="/" method="POST">
+					<div class="field">
+						<div class="control">
+							<input type="text" name="username" id="" />
+						</div>
+					</div>
+					<div class="field">
+						<div class="control">
+							<label class="radio">
+								<input type="radio" name="platform" value="battle" checked />
+								PC
+							</label>
+							<label class="radio">
+								<input type="radio" name="platform" value="xbl" />
+								XBOX
+							</label>
+							<label class="radio">
+								<input type="radio" name="platform" value="psn" />
+								Playstation
+							</label>
+							<label class="radio">
+								<input type="radio" name="platform" value="uno" />
+								Activision ID
+							</label>
+						</div>
+					</div>
 
-          </div>
-          <div class="field">
-            <div class="control">
-              <label class="radio">
-                <input type="radio" name="platform" value="battle" checked>
-                PC
-              </label>
-              <label class="radio">
-                <input type="radio" name="platform" value="xbl">
-                XBOX
-              </label>
-              <label class="radio">
-                <input type="radio" name="platform" value="psn">
-                Playstation
-              </label>
-              <label class="radio">
-                <input type="radio" name="platform" value="uno">
-                Activision ID
-              </label>
-            </div>
-          </div>
+					<button type="submit">Search</button>
+				</form>
 
-          <button type="submit">Search</button>
-        </form>
-      </div>
-
-    </section>
-
-  </div>
-  <div>
-    <p name="stuff">Stuff here</p>
-  </div>
-</body>
-
+				<div>
+					<p name="stuff">Stuff here</p>
+				</div>
+			</div>
+		</section>
+	</body>
 </html>

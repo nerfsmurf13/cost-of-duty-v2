@@ -1,19 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Player Data</title>
+		<link href="/styles/bulma.css" rel="stylesheet" />
+		<link href="/styles/styles.css" rel="stylesheet" />
+	</head>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Player Data</title>
-</head>
+	<body>
+		<section class="section">
+			<div class="container">
+				<div>
+					<a href="/"><button>Try Again</button></a>
+				</div>
+				<div>Player Name: <%= foo.username %></div>
+				<div>Kills <%= foo.lifetime.all.properties.kills %></div>
+				<div>Deaths <%= foo.lifetime.all.properties.deaths %></div>
+				<div>K:D <%= foo.lifetime.all.properties.kdRatio %></div>
 
-<body>
-    <div><a href="/">Try Again</a></div>
-    <div>Player Name: <%= foo.username %></div>
-    <div>Kills <%= foo.lifetime.all.properties.kills %></div>
-    <div>Deaths <%= foo.lifetime.all.properties.deaths %></div>
-    <div>K:D <%= foo.lifetime.all.properties.kdRatio %></div>
-    <!-- <div><%= console.log(JSON.stringify(foo)) %></div> -->
-</body>
+				<p>Basic Info</p>
+				<% for (const [key, value] of Object.entries(foo.lifetime.all.properties)) { %>
 
+				<p><%= key %></p>
+				<p><%= value %></p>
+
+				<% } %>
+
+				<h2>SECTION</h2>
+				<div class="weapon-grid">
+					<% for (const weaponClasses of Object.keys(foo.lifetime.itemData)) { %>
+
+					<h3><%= weaponClasses %></h3>
+
+					<% for (const weaponSpecific of Object.keys(foo.lifetime.itemData[weaponClasses])) { %>
+					<div class="card">
+						<h4><%= weaponSpecific %></h4>
+
+						<% for (const [key, value] of
+						Object.entries(foo.lifetime.itemData[weaponClasses][weaponSpecific].properties)) { %>
+
+						<p><%= key %></p>
+						<p><%= value %></p>
+						<% } %>
+					</div>
+				</div>
+				<% } %>
+			</div>
+			<% } %>
+		</section>
+	</body>
 </html>
