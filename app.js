@@ -12,6 +12,7 @@ app.set('view engine', "ejs")
 app.use(bodyParser.urlencoded({
     extended: true
 }))
+app.use("/styles", express.static(__dirname + "/styles"));
 
 let data = ""
 
@@ -21,15 +22,18 @@ app.get('/', (req, res) => {
 
 })
 
+
+
 app.post('/', (req, res) => {
 
     let username = req.body.username
-    console.log(req.body.username)
+    var desiredPlatform = req.body.platform
+    console.log(req.body)
 
     API.login(process.env.MYAPIUN, process.env.MYAPIPW)
         .then(function (response) {
             console.log(response)
-            API.MWstats(username, API.platforms.battle).then((output) => {
+            API.MWstats(username, API.platforms[desiredPlatform]).then((output) => {
                 console.log(output);
                 data = output
                 // res.send(`<div>Data: ${data.username} > ${data.level}</div><div>${JSON.stringify(data)}</div>`)
@@ -38,6 +42,9 @@ app.post('/', (req, res) => {
                 })
             }).catch((err) => {
                 console.log(err);
+                res.render('playernotfound', {
+                    un: username
+                })
             });
         })
         .catch(function (error) {
@@ -46,7 +53,7 @@ app.post('/', (req, res) => {
 
 })
 
-app.listen(3000, () => {
+app.listen(5500, () => {
     console.log('listening')
     // console.log(process.env.MYAPIUN)
 })

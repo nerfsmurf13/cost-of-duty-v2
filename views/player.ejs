@@ -8,8 +8,12 @@
 </head>
 
 <body>
+    <div><a href="/">Try Again</a></div>
     <div>Player Name: <%= foo.username %></div>
-    <div>Other <%= foo.level %></div>
+    <div>Kills <%= foo.lifetime.all.properties.kills %></div>
+    <div>Deaths <%= foo.lifetime.all.properties.deaths %></div>
+    <div>K:D <%= foo.lifetime.all.properties.kdRatio %></div>
+    <!-- <div><%= console.log(JSON.stringify(foo)) %></div> -->
 </body>
 
 </html>
