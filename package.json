@@ -1,0 +1,19 @@
+{
+  "name": "cost-of-duty-v2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nerfsmurf13/cost-of-duty-v2.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nerfsmurf13/cost-of-duty-v2/issues"
+  },
+  "homepage": "https://github.com/nerfsmurf13/cost-of-duty-v2#readme"
+}
