@@ -1,15 +1,20 @@
 body {
-	background-color: #fcfcfc;
-	color: #404622;
-	font-family: 'Varela', sans-serif;
+    background-color: #fcfcfc;
+    color: #404622;
+    font-family: 'Varela', sans-serif;
 }
 
 .high-light {
-	background-color: aquamarine;
-	border: solid 1px;
+    background-color: aquamarine;
+    border: solid 1px;
 }
 
 .weapon-grid {
-	grid-template-columns: 40px 50px auto 50px 40px;
-	grid-template-rows: 25% 100px auto;
+    grid-template-columns: 40px 50px auto 50px 40px;
+    grid-template-rows: 25% 100px auto;
+}
+
+.outline {
+    border: black 1px solid;
+    background-color: yellow;
 }

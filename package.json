@@ -21,7 +21,8 @@
     "call-of-duty-api": "^1.2.16",
     "dotenv": "^8.2.0",
     "ejs": "^3.1.5",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "fomantic-ui": "^2.8.7"
   },
   "engines": {
     "node": "12.16.1"

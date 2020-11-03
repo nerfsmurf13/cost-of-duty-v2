@@ -1,53 +1,85 @@
-<!DOCTYPE html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Player Data</title>
-		<link href="/styles/bulma.css" rel="stylesheet" />
-		<link href="/styles/styles.css" rel="stylesheet" />
-	</head>
+<%- include('header'); -%>
 
-	<body>
-		<section class="section">
-			<div class="container">
-				<div>
-					<a href="/"><button>Try Again</button></a>
-				</div>
-				<div>Player Name: <%= foo.username %></div>
-				<div>Kills <%= foo.lifetime.all.properties.kills %></div>
-				<div>Deaths <%= foo.lifetime.all.properties.deaths %></div>
-				<div>K:D <%= foo.lifetime.all.properties.kdRatio %></div>
+<div class="ui container">
+	<div>
+		<a href="/"><button class="btn">Search Another Player</button></a>
+	</div>
+	<div class="hero hero-sm bg-dark">
+		<div class="hero-body">
+			<h1><%= foo.username %></h1>
+			<p>[Matches - <%= foo.lifetime.all.properties.totalGamesPlayed %>]
+				[Hours - <%= Math.round(foo.lifetime.all.properties.timePlayedTotal/60/60) %>]
+				[Accuracy - <%= Math.round(foo.lifetime.all.properties.accuracy*100) %>%] [Kills -
+				<%= foo.lifetime.all.properties.kills %>]
+				[Deaths -
+				<%= foo.lifetime.all.properties.deaths %>] [K:D -
+				<%= foo.lifetime.all.properties.kdRatio.toFixed(2) %>]</p>
+		</div>
+	</div>
 
-				<p>Basic Info</p>
-				<% for (const [key, value] of Object.entries(foo.lifetime.all.properties)) { %>
 
-				<p><%= key %></p>
-				<p><%= value %></p>
 
-				<% } %>
+	<h3>Basic Info</h3>
+	<table class="table">
+		<tbody>
+			<% for (const [key, value] of Object.entries(foo.lifetime.all.properties)) { %>
+			<% if (key == 'losses' ||key ==  'wins'){%>
+			<tr>
+				<td data-label="Name"><%= key %></td>
+				<td data-label="Age"><%= value %></td>
+			</tr>
+			<% } %>
+			<% } %>
+		</tbody>
+	</table>
 
-				<h2>SECTION</h2>
-				<div class="weapon-grid">
-					<% for (const weaponClasses of Object.keys(foo.lifetime.itemData)) { %>
 
-					<h3><%= weaponClasses %></h3>
 
-					<% for (const weaponSpecific of Object.keys(foo.lifetime.itemData[weaponClasses])) { %>
-					<div class="card">
-						<h4><%= weaponSpecific %></h4>
 
-						<% for (const [key, value] of
-						Object.entries(foo.lifetime.itemData[weaponClasses][weaponSpecific].properties)) { %>
 
-						<p><%= key %></p>
-						<p><%= value %></p>
+
+	<h2>SECTION</h2>
+
+	<div>
+		<% for (const weaponClasses of Object.keys(foo.lifetime.itemData)) { %>
+		<details class="accordion">
+			<summary class="accordion-header">
+				<i class="icon icon-arrow-right mr-1"></i>
+				<%= weaponClasses %>
+			</summary>
+			<div class="accordion-body">
+				<div class="container ">
+					<div class="columns">
+						<% for (const weaponSpecific of Object.keys(foo.lifetime.itemData[weaponClasses])) { %>
+						<div class="column col-3 col-xs-12">
+							<div class="card">
+								<div class="card-header">
+									<div class="card-title h5">
+										<%= weaponSpecific %>
+									</div>
+									<div class="card-subtitle text-gray">...</div>
+								</div>
+								<table class="table">
+									<tbody>
+										<% for (const [key, value] of Object.entries(foo.lifetime.itemData[weaponClasses][weaponSpecific].properties)) { %>
+										<tr>
+											<td data-label="Name"><%= key %></td>
+											<td data-label="Age"><%= value %></td>
+										</tr>
+										<% } %>
+									</tbody>
+								</table>
+							</div>
+						</div>
 						<% } %>
 					</div>
 				</div>
-				<% } %>
 			</div>
-			<% } %>
-		</section>
-	</body>
-</html>
+		</details>
+		<% } %>
+	</div>
+
+</div>
+
+</div>
+<%- include('footer'); -%>

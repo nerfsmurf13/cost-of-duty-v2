@@ -10,6 +10,8 @@ const bodyParser = require('body-parser');
 
 const port = 3000;
 
+const dataCrunch = require(__dirname + "/dataCrunch.js")
+
 app.set('view engine', 'ejs');
 app.use(
 	bodyParser.urlencoded({
@@ -17,6 +19,7 @@ app.use(
 	})
 );
 app.use('/styles', express.static(__dirname + '/styles'));
+app.use('/dist', express.static(__dirname + '/dist'));
 
 let data = '';
 
@@ -32,11 +35,13 @@ app.post('/', (req, res) => {
 
 	API.login(process.env.MYAPIUN, process.env.MYAPIPW)
 		.then(function (response) {
-			console.log(response);
+			// console.log(response);
 			API.MWstats(username, API.platforms[desiredPlatform])
 				.then((output) => {
-					console.log(output);
+					// console.log(output);
 					data = output;
+					rawImport = output;
+					console.log(rawImport);
 					// res.send(`<div>Data: ${data.username} > ${data.level}</div><div>${JSON.stringify(data)}</div>`)
 					res.render('player', {
 						foo: data,
