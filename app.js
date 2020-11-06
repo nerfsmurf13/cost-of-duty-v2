@@ -1,16 +1,12 @@
 require('dotenv').config();
-
-const API = require('call-of-duty-api')();
-
-const express = require('express');
-
-const app = express();
-
-const bodyParser = require('body-parser');
-
-const port = 3000;
-
 const dataCrunch = require(__dirname + "/dataCrunch.js")
+const API = require('call-of-duty-api')();
+const express = require('express');
+const app = express();
+const bodyParser = require('body-parser');
+const port = 3000;
+let data = {};
+
 
 app.set('view engine', 'ejs');
 app.use(
@@ -21,8 +17,8 @@ app.use(
 app.use('/styles', express.static(__dirname + '/styles'));
 app.use('/dist', express.static(__dirname + '/dist'));
 
-let data = '';
 
+module.exports.apiData = data
 app.get('/', (req, res) => {
 	res.sendFile(__dirname + '/index.html');
 	// res.send(data)
@@ -31,7 +27,7 @@ app.get('/', (req, res) => {
 app.post('/', (req, res) => {
 	let username = req.body.username;
 	var desiredPlatform = req.body.platform;
-	console.log(req.body);
+	// console.log(req.body);
 
 	API.login(process.env.MYAPIUN, process.env.MYAPIPW)
 		.then(function (response) {
@@ -40,11 +36,20 @@ app.post('/', (req, res) => {
 				.then((output) => {
 					// console.log(output);
 					data = output;
+					itemData = output.lifetime.itemData;
+					// console.log(itemData)
 					rawImport = output;
-					console.log(rawImport);
+					// console.log(JSON.stringify(data))
+					// console.log(dataCrunch.itemData.lifetime)
+					// console.log(dataCrunch.dataCleaner())
+					// dataCrunch.dataCleaner(output);
+					// console.log("data to dataCrunch", rawImport);
 					// res.send(`<div>Data: ${data.username} > ${data.level}</div><div>${JSON.stringify(data)}</div>`)
 					res.render('player', {
 						foo: data,
+						myReqItemData: output.lifetime.itemData,
+						returnedData: dataCrunch.returnedData,
+						cleanPercent: dataCrunch.cleanPercent
 					});
 				})
 				.catch((err) => {
@@ -63,3 +68,5 @@ app.listen(port, () => {
 	console.log('Listening on port ' + port);
 	// console.log(process.env.MYAPIUN)
 });
+
+console.log("app.js Exports", module.exports)

@@ -17,7 +17,13 @@
 		</div>
 	</div>
 
-
+	<h1>TEST START</h1>
+	<h2>
+		<%= returnedData('iw8_lm_mgolf36').name %>
+		<%= returnedData('weapon_launcher').name %>
+		<%= //console.log(myReqItemData) %>
+	</h2>
+	<h1>TEST END</h1>
 
 	<h3>Basic Info</h3>
 	<table class="table">
@@ -28,6 +34,7 @@
 				<td data-label="Name"><%= key %></td>
 				<td data-label="Age"><%= value %></td>
 			</tr>
+
 			<% } %>
 			<% } %>
 		</tbody>
@@ -45,7 +52,7 @@
 		<details class="accordion">
 			<summary class="accordion-header">
 				<i class="icon icon-arrow-right mr-1"></i>
-				<%= weaponClasses %>
+				<%= returnedData(weaponClasses).name %>
 			</summary>
 			<div class="accordion-body">
 				<div class="container ">
@@ -55,19 +62,34 @@
 							<div class="card">
 								<div class="card-header">
 									<div class="card-title h5">
-										<%= weaponSpecific %>
+										<%= returnedData(weaponSpecific).name %>
 									</div>
-									<div class="card-subtitle text-gray">...</div>
+									<!-- <div class="card-subtitle text-gray">...</div> -->
 								</div>
 								<table class="table">
 									<tbody>
+										<tr>
+											<td>Kills</td>
+											<td><%= returnedData(weaponSpecific).kills %></td>
+										</tr>
+										<tr>
+											<td>Deaths</td>
+											<td><%= returnedData(weaponSpecific).deaths %></td>
+										</tr>
+										<tr>
+											<td>Accuracy</td>
+											<td><%= cleanPercent(returnedData(weaponSpecific).accuracy) %></td>
+										</tr>
+									</tbody>
+									<!-- <tbody>
 										<% for (const [key, value] of Object.entries(foo.lifetime.itemData[weaponClasses][weaponSpecific].properties)) { %>
 										<tr>
 											<td data-label="Name"><%= key %></td>
 											<td data-label="Age"><%= value %></td>
 										</tr>
+										
 										<% } %>
-									</tbody>
+									</tbody> -->
 								</table>
 							</div>
 						</div>
