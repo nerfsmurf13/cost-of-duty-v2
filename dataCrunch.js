@@ -1,207 +1,329 @@
-let rawImport = ""
-let refinedData = ''
-let refinedDataBasic = ''
-let refinedDataARWeapons = []
-// let itemData = {}
+// console.log('LOADED');
 const apiApp = require(__dirname + "/app.js")
 module.exports.returnedData = returnedData
-//Step One, Find if "x" exist in our API response
+
+let weaponData = {};
+
+// module.exports.standardCategories = standardCategories
+const standardCategories = [
+    'weapon_sniper',
+    'Snipers',
+    'weapon_lmg',
+    'Light Machine Guns',
+    'weapon_pistol',
+    'Handguns',
+    'weapon_assault_rifle',
+    'Assault Rifles',
+    'weapon_shotgun',
+    'Shotguns',
+    'weapon_smg',
+    'Submachine Guns',
+    'weapon_marksman',
+    'Marksman Rifles',
+];
+
 function returnedData(x) {
-    let catIndex = 0
-    let foundCat = false
-    let searchCat = false
-    let foundSpecific = null
-    let message = ''
-    let arr1 = {}
+    // console.log('==============================');
+    // console.log('==============================');
+    // console.log('###Function Executed returnData(' + x + ')');
 
-    // console.log("ITEMDATA from APP.js", JSON.stringify(apiApp.apiData))
-    // console.log("ITEMDATA from APP.js", itemData)
+    let cat = null;
+    let arr1 = {};
 
-
-    for (const subcat of Object.values(itemData)) {
-        searchCat = Object.entries(itemData)[catIndex][0]
-        let count = 0
-        if (x == searchCat) {
-            foundCat = x
-            console.log('Matched Category Name!', foundCat)
-            console.log("Returning", dataObject[foundCat]) //Returning object containing all weapons under category
-            // console.log('Category Index', catIndex)
-            if (dataObject.hasOwnProperty(x)) {
-                return dataObject[foundCat] //ENDPOINT 1
-            } else {
-                message = "Category Issue!"
-                return message //ENDPOINT 1
-            }
-
-        } else {
-            for (const subWeapon of Object.keys(subcat)) {
-                count++
-                if (x == subWeapon) {
-                    console.log('Matched Specific Name!', x)
-                    foundCat = searchCat
-                    foundSpecific = x
-                    // console.log('Target found!')
-                    // console.log("Found Within", foundCat)
-                    // console.log(subcat[x].properties)
-                    arr1 = subcat[x].properties
-                    // arr1 = Object.keys(subcat)
-                    // console.log("arr1", arr1)
-                    // console.log(arr1.indexOf(x))
-                    // console.log("Found", foundSpecific)
-                    // lookupTable(x, foundCat)
-                    return lookupTable(x, foundSpecific, arr1)
-                }
-
-            }
-            if (foundSpecific == false) {
-                console.log("failed")
-                return 'failed'
-            }
-            // return "Weapon cat not found"
-        }
-        catIndex++
-    }
-    // Cannot find anything
-    if (!foundCat) {
-        // console.log("not found")
-        message = 'Cannot find ' + x
-        return message
-    }
-    // if (itemData.hasOwnProperty(x)) {
-    //     console.log('FOUND!')
-    // } else {
-    //     for (const subset of Object.values(itemData)) {
-    //         count++
-    //         if (subset.hasOwnProperty(x)) {
-    //             console.log('Target found!')
-    //             // console.log('Parent Index:', subset)
-    //             arr1 = Object.keys(itemData)
-    //             console.log("arr1", arr1)
-    //             console.log("x", x)
-    //             console.log("subset", Object.values(subset))
-    //             console.log(arr1.indexOf(x))
-    //             console.log('Subset Index:', count)
-    //         }
-    //         // console.log('Not Found...')
-    //     }
-    //     // return itemData.hasOwnProperty(x)
-    // }
-    // console.log(itemData)
-    // console.log(itemData)
-    // console.log('Matched Specific Name!', x)
-    // console.log("Returning", x, foundSpecific, arr1) //Returning object containing all weapons under category
-    // return lookupTable(x, foundSpecific, arr1)
-}
-//If found, lets plug data into this function to find if our plug-in data exists...
-function lookupTable(x, specific, arr) {
-    console.log("lookupTable Loaded")
-    let count = 0
-    let arr2 = {}
-    let c = {}
-
-    if (!specific) {
-        if (dataObject.hasOwnProperty(x)) {
-            // console.log('FOUND!')
-            // return dataObject[x]
-        } else {
-            for (const subset of Object.values(dataObject)) {
-                count++
-                if (subset.hasOwnProperty(x)) {
-                    // console.log('Target found!')
-                    // console.log('Array Index:', count)
-                    // console.log(dataObject[subset].name)
-                }
-                // console.log('Not Found...')
-            }
-            // return itemData.hasOwnProperty(x)
-        }
+    // console.log(categories.indexOf(x));
+    if (standardCategories.includes(x)) {
+        // console.log('Valid Category Found');
+        // console.log(categories[categories.indexOf(x) + 1]);
+        return weaponData[x]
+        return standardCategories[standardCategories.indexOf(x) + 1];
     } else {
-        for (const subCat of Object.values(dataObject)) {
-            // console.log(subCat)
-            for (const subWeapon of Object.keys(subCat)) {
-                if (x == subWeapon) {
-                    // console.log("Found", subWeapon)
-                    // console.log(subCat[subWeapon])
-                    arr2 = subCat[subWeapon]
-                    c = {
-                        ...arr,
-                        ...arr2
-                    }
-                    // console.log(c) 
-                    return c
-                }
+        // console.log('Valid Category Not Found');
+        return lookupTable(x); // Pass on to 2nd function
+    }
+    console.log('end of function reached somehow?');
+}
+
+function lookupTable(x) {
+    // console.log('==============================');
+    // console.log('###Function Executed lookupTable(' + x + ')');
+    let arr2 = {};
+    let c = {};
+    for (const [key, value] of Object.entries(weaponData)) {
+        // console.log(key, value);
+        if (value.hasOwnProperty(x)) {
+            // console.log(category)
+            // console.log('Found', x, 'in', key);
+            if (value[x].name) {
+                return value[x]
             }
         }
-        return "Not Found"
     }
 
+    return x + " Not Setup"
+
 }
+
 //Our data values
 const dataObject = {
-    'weapon_sniper': {
-        name: "Snipers",
-        'iw8_sn_alpha50': {
-            desc: "Enter description here",
-            name: "AX-50",
-            weaponCost: 3999,
+    weapon_sniper: {
+        name: 'Snipers',
+        iw8_sn_alpha50: {
+            name: 'AX-50',
+            cost: 3999,
             ammoCost: 20,
             magSize: 5,
         },
-        'iw8_sn_hdromeo': {
-            desc: "Enter description here",
-            name: "HDR",
-            weaponCost: 1000,
+        iw8_sn_hdromeo: {
+            name: 'HDR',
+            cost: 1000,
             ammoCost: 10,
-            magSize: 5
+            magSize: 5,
         },
-        'iw8_sn_xmike109': {
-            desc: "Enter description here",
-            name: "Ray-O-Tek",
-            weaponCost: 10000,
+        iw8_sn_xmike109: {
+            name: 'Ray-O-Tek',
+            cost: 10000,
             ammoCost: 10,
-            magSize: 5
+            magSize: 5,
+        },
+        iw8_sn_delta: {
+            name: 'Dragnov',
+            cost: 10000,
+            ammoCost: 10,
+            magSize: 5,
         },
     },
-    'weapon_lmg': {
-        name: "Light Machine Guns",
-        'iw8_lm_mgolf36': {
-            desc: "Enter description here",
-            name: "MG36",
-            weaponCost: 3000,
-            ammoCost: .30,
-            magsize: 75
-        }
+    weapon_dmr: {
+        name: 'Marksman Rifles',
+        iw8_sn_sbeta: {
+            name: 'K98',
+            cost: 3999,
+            ammoCost: 20,
+            magSize: 5,
+        },
+        iw8_sn_crossbow: {
+            name: 'K98',
+            cost: 3999,
+            ammoCost: 20,
+            magSize: 5,
+        },
+        iw8_sn_romeo700: {
+            name: 'K98',
+            cost: 3999,
+            ammoCost: 20,
+            magSize: 5,
+        },
+        iw8_sn_kilo98: {
+            name: 'K98',
+            cost: 3999,
+            ammoCost: 20,
+            magSize: 5,
+        },
+        iw8_sn_mike14: {
+            name: 'M14',
+            cost: 1000,
+            ammoCost: 10,
+            magSize: 5,
+        },
+    },
+    weapon_lmg: {
+        name: 'Light Machine Guns',
+        iw8_lm_mgolf36: {
+            name: 'MG36',
+            cost: 3000,
+            ammoCost: 0.3,
+            magsize: 75,
+        },
+        iw8_lm_kilo121: {
+            name: 'Kilo 121',
+            cost: 3000,
+            ammoCost: 0.3,
+            magsize: 75,
+        },
+        iw8_lm_mkilo3: {
+            name: 'iw8_lm_mkilo3',
+            cost: 3000,
+            ammoCost: 0.3,
+            magsize: 75,
+        },
+        iw8_lm_mgolf34: {
+            name: 'iw8_lm_mgolf34',
+            cost: 3000,
+            ammoCost: 0.3,
+            magsize: 75,
+        },
+        iw8_lm_lima86: {
+            name: 'iw8_lm_lima86',
+            cost: 3000,
+            ammoCost: 0.3,
+            magsize: 75,
+        },
+        iw8_lm_pkilo: {
+            name: 'iw8_lm_pkilo',
+            cost: 3000,
+            ammoCost: 0.3,
+            magsize: 75,
+        },
+        iw8_lm_sierrax: {
+            name: 'iw8_lm_sierrax',
+            cost: 3000,
+            ammoCost: 0.3,
+            magsize: 75,
+        },
+
+    },
+    weapon_pistol: {
+        name: 'Handguns',
+        iw8_pi_mike1911: {
+            name: '1911',
+            cost: 1,
+            ammoCost: 0.01,
+        },
+        iw8_pi_cpapa: {
+            name: 'NOT CONFIGURED',
+            cost: 1,
+            ammoCost: 0.01,
+        },
+        iw8_pi_mike9: {
+            name: 'NOT CONFIGURED',
+            cost: 1,
+            ammoCost: 0.01,
+        },
+        iw8_pi_golf21: {
+            name: 'NOT CONFIGURED',
+            cost: 1,
+            ammoCost: 0.01,
+        },
+        iw8_pi_decho: {
+            name: 'NOT CONFIGURED',
+            cost: 1,
+            ammoCost: 0.01,
+        },
+        iw8_pi_papa320: {
+            name: 'NOT CONFIGURED',
+            cost: 1,
+            ammoCost: 0.01,
+        },
+    },
+    weapon_assault_rifle: {
+        name: 'Assault Rifles',
+        totalCost: 0,
+        iw8_ar_falima: {
+            name: 'iw8_ar_falima',
+            cost: 999,
+            ammoCost: .05
+        },
+        iw8_ar_tango21: {
+            name: 'iw8_ar_tango21',
+
+        },
+        iw8_ar_mike4: {
+            name: 'iw8_ar_mike4',
+
+        },
+        iw8_ar_anovember94: {
+            name: 'iw8_ar_anovember94',
+
+        },
+        iw8_ar_falpha: {
+            name: 'iw8_ar_falpha',
+
+        },
+        iw8_ar_mcharlie: {
+            name: 'iw8_ar_mcharlie',
+
+        },
+        iw8_ar_akilo47: {
+            name: 'iw8_ar_akilo47',
+
+        },
+        iw8_ar_kilo433: {
+            name: 'iw8_ar_kilo433',
+
+        },
+        iw8_ar_scharlie: {
+            name: 'iw8_ar_scharlie',
+
+        },
+        iw8_ar_asierra12: {
+            name: 'iw8_ar_asierra12',
+
+        },
+        iw8_ar_galima: {
+            name: 'iw8_ar_galima',
+
+        },
+        iw8_ar_sierra552: {
+            name: 'iw8_ar_sierra552',
+
+        },
+        "iw8_ar_valpha": {
+            name: 'iw8_ar_valpha',
+        },
     }
-}
+};
 module.exports.cleanPercent = cleanPercent
 
 function cleanPercent(x) {
     return Math.round(x * 100) + "%"
 }
-// module.exports.dataCleaner = dataCleaner
+module.exports.buildWeaponData = buildWeaponData
 
-// function dataCleaner(raw) {
-//     // console.log(raw.lifetime.itemData)
-//     console.log(raw.lifetime.itemData.weapon_assault_rifle)
-//     for (const weaponSpecific of Object.keys(raw.lifetime.itemData.weapon_assault_rifle)) {
-//         if (weaponSpecific.key == dataTable)
-//             refinedDataARWeapons.push(dataTable.value)
-//     }
-//     console.log(refinedDataARWeapons)
-//     // return raw
-// }
+function buildWeaponData(x) {
+    console.log('building')
+    for (const [weaponCatKey, weaponCatVal] of Object.entries(x)) {
+        if (standardCategories.includes(weaponCatKey)) {
+            // console.log(subCat)
+            weaponData[weaponCatKey] = {
+
+            }
+            for (const [weaponSpecKey, weaponSpecVal] of Object.entries(weaponCatVal)) {
+                // console.log(weaponSpecKey, weaponSpecVal.properties)
+                //IF CATEGORY EXISTS IN DATAOBJECT
+                if (dataObject.hasOwnProperty(weaponCatKey)) {
+                    //IF WEAPON EXISTS IN DATAOBJECT[CATEGORY]
+                    if (dataObject[weaponCatKey].hasOwnProperty(weaponSpecKey)) {
+                        // console.log(weaponSpecVal.properties, dataObject[weaponCatKey][weaponSpecKey])
+                        weaponData[weaponCatKey][weaponSpecKey] = {
+                            ...weaponSpecVal.properties,
+                            ...dataObject[weaponCatKey][weaponSpecKey],
+                        }
+                        weaponData[weaponCatKey].name = dataObject[weaponCatKey].name
+                    }
+                } else {
+                    // console.log("Weapon not configured", weaponCatKey, weaponSpecKey)
+                }
+            }
+        }
+        // console.log(weaponData)
+    }
+
+}
+// buildWeaponData();
+
+module.exports.buildCostData = buildCostData
+
+function buildCostData() {
+    for (const [weaponCatKey, weaponCatVal] of Object.entries(weaponData)) {
+        let catCost = 0
+        if (standardCategories.includes(weaponCatKey)) {
+            // console.log(weaponCatKey)
+            for (const [weaponSpecKey, weaponSpecVal] of Object.entries(weaponCatVal)) {
+                // console.log(weaponSpecKey)
+                weaponData[weaponCatKey][weaponSpecKey].totCost = (weaponSpecVal.cost * weaponSpecVal.deaths) + (weaponSpecVal.shots * weaponSpecVal.ammoCost)
+                // console.log(weaponSpecVal)
+                if (!isNaN(weaponData[weaponCatKey][weaponSpecKey].totCost)) {
+                    catCost = catCost + weaponData[weaponCatKey][weaponSpecKey].totCost
+                    // console.log(catCost)
+                }
+
+            }
+            weaponData[weaponCatKey].totCost = catCost
+            // console.log(catCost)
+        }
+
+    }
+}
 
 
-
-
-// module.exports.classNames = classNames
-
-// function classNames(raw) {
-//     if (raw == "weapon_assault_rifle") {
-//         return "Assault Rifles"
-//     }
-// }
-
-
-console.log("Client JS Loaded")
-console.log("dataCrunch Exports", module.exports)
+// console.log("Client JS Loaded")
+// console.log("dataCrunch Exports", module.exports)

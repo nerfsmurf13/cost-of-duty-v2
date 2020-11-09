@@ -17,13 +17,13 @@
 		</div>
 	</div>
 
-	<h1>TEST START</h1>
-	<h2>
+	<!-- <h1>TEST START</h1> -->
+	<!-- <h2>
 		<%= returnedData('iw8_lm_mgolf36').name %>
-		<%= returnedData('weapon_launcher').name %>
+		<%= //returnedData('weapon_launcher').name %>
 		<%= //console.log(myReqItemData) %>
-	</h2>
-	<h1>TEST END</h1>
+	</h2> -->
+	<!-- <h1>TEST END</h1> -->
 
 	<h3>Basic Info</h3>
 	<table class="table">
@@ -48,21 +48,29 @@
 	<h2>SECTION</h2>
 
 	<div>
+		<% cleanedDataWeapons %>
 		<% for (const weaponClasses of Object.keys(foo.lifetime.itemData)) { %>
+		<% if (weaponClasses == 'weapon_pistol' || weaponClasses == 'weapon_sniper' || weaponClasses == 'weapon_lmg' || weaponClasses == 'weapon_assault_rifle'){ %>
+		<% //console.log(weaponClasses) %>
 		<details class="accordion">
 			<summary class="accordion-header">
 				<i class="icon icon-arrow-right mr-1"></i>
-				<%= returnedData(weaponClasses).name %>
+				<% let tots = 0 %>
+				<%= returnedData(weaponClasses).name %> [<%= returnedData(weaponClasses).totCost %>]
+				<% //console.log(returnedData(weaponClasses)) %>
 			</summary>
 			<div class="accordion-body">
 				<div class="container ">
 					<div class="columns">
 						<% for (const weaponSpecific of Object.keys(foo.lifetime.itemData[weaponClasses])) { %>
-						<div class="column col-3 col-xs-12">
+						<div class="column col-2 col-xs-12">
 							<div class="card">
 								<div class="card-header">
 									<div class="card-title h5">
-										<%= returnedData(weaponSpecific).name %>
+										<% let gunTots = (returnedData(weaponSpecific).ammoCost * returnedData(weaponSpecific).shots)+(returnedData(weaponSpecific).deaths*returnedData(weaponSpecific).cost) %>
+										<%= returnedData(weaponSpecific).name %> ||
+										<%= returnedData(weaponSpecific).totCost %>
+										<% //console.log(returnedData(weaponSpecific).totCost) %>
 									</div>
 									<!-- <div class="card-subtitle text-gray">...</div> -->
 								</div>
@@ -77,8 +85,22 @@
 											<td><%= returnedData(weaponSpecific).deaths %></td>
 										</tr>
 										<tr>
+											<td>Shots</td>
+											<td><%= returnedData(weaponSpecific).shots %></td>
+										</tr>
+
+										<tr>
 											<td>Accuracy</td>
 											<td><%= cleanPercent(returnedData(weaponSpecific).accuracy) %></td>
+										</tr>
+										<tr>
+											<td>Weapon Cost</td>
+											<td><%= returnedData(weaponSpecific).cost %></td>
+										</tr>
+										<tr>
+											<td>Ammo Cost</td>
+											<td><%= returnedData(weaponSpecific).cost * returnedData(weaponSpecific).shots %>
+											</td>
 										</tr>
 									</tbody>
 									<!-- <tbody>
@@ -98,6 +120,7 @@
 				</div>
 			</div>
 		</details>
+		<% } %>
 		<% } %>
 	</div>
 

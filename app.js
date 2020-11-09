@@ -35,8 +35,11 @@ app.post('/', (req, res) => {
 			API.MWstats(username, API.platforms[desiredPlatform])
 				.then((output) => {
 					// console.log(output);
+					dataCrunch.buildWeaponData(output.lifetime.itemData)
+					dataCrunch.buildCostData()
 					data = output;
 					itemData = output.lifetime.itemData;
+					firearmData = dataCrunch.standardCategories;
 					// console.log(itemData)
 					rawImport = output;
 					// console.log(JSON.stringify(data))
@@ -45,11 +48,15 @@ app.post('/', (req, res) => {
 					// dataCrunch.dataCleaner(output);
 					// console.log("data to dataCrunch", rawImport);
 					// res.send(`<div>Data: ${data.username} > ${data.level}</div><div>${JSON.stringify(data)}</div>`)
+					// dataCrunch.buildWeaponData()
+
 					res.render('player', {
 						foo: data,
 						myReqItemData: output.lifetime.itemData,
 						returnedData: dataCrunch.returnedData,
-						cleanPercent: dataCrunch.cleanPercent
+						cleanPercent: dataCrunch.cleanPercent,
+						cleanedDataWeapons: dataCrunch.weaponData,
+						firearmData: dataCrunch.standardCategories
 					});
 				})
 				.catch((err) => {
@@ -58,6 +65,18 @@ app.post('/', (req, res) => {
 						un: username,
 					});
 				});
+			// API.MWBattleData(username, API.platforms[desiredPlatform])
+			// 	.then((output2) => {
+
+			// 		console.log(JSON.stringify(output2))
+
+			// 	})
+			// 	.catch((err) => {
+			// 		console.log(err);
+			// 		res.render('playernotfound', {
+			// 			un: username,
+			// 		});
+			// 	});
 		})
 		.catch(function (error) {
 			console.log(error);
